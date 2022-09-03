@@ -100,6 +100,9 @@ function corroborarContrasenha(){
 function controlFinal(){
     if(usuario==usuarioEnter && contrasenha==contrasenhaEnter){
         alert("Inicio de Sesión Satisfactorio")
+        alert("Bienvenido " + usuario)
+    } else {
+        alert("Usuario no encontrado")
     }
 }
 
@@ -111,3 +114,5 @@ crearContrasenha();
 corroborarUsuario();
 corroborarContrasenha();
 controlFinal();
+
+

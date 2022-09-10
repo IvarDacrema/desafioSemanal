@@ -14,18 +14,22 @@ class Cliente{
     }
 }
 
+//funcion de corroborar errores
+function corroborarVacio(items){
+    while(items==""){
+        items = prompt("El formulario no puede estar vacio.\n Introduzca nuevamente la información")
+    }
+}
+
 //función crear contraseña
 function crearContrasenha(contrasenha){
     this.contrasenha = contrasenha;
     let errores = 0;
     corroborarVacio(contrasenha);
     let corroborarContra = prompt("Repita la contraseña");
-    while(contrasenha!=corroborarContra && errores<2){
+    while(contrasenha!=corroborarContra && errores<2 && corroborarContra==""){
         alert("Las contraseñas no coinciden");
         corroborarContra = prompt("Repita la contraseña");
-        if(corroborarContra==""){
-        corroborarContra = prompt("El fomrmulario no puede estar vacio.\n Introduzca nuevamente la información")
-        }
         errores++;
     }
     if(errores>=2){

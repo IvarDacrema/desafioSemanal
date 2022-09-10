@@ -1,27 +1,16 @@
-//variables globales inicio de sesion
-let limiteErrores = 3;
-let intentosContrasenha;
-let usuarioEnter;
-let contrasenhaEnter;
-
-//corroborar vacio en los datos del usuario
-function corroborarVacio(items){
-    let error = 0;
-    while(items==""){
-        items = prompt("El fomrmulario no puede estar vacio.\n Introduzca nuevamente la información")
-    }
-}
+//array de clientes
 const clientes = [];
 
 //contructor de clientes
 class Cliente{
-    constructor(id, nombre, edad, dni, sueldo, contrasenha){
+    constructor(id, nombre, edad, dni, sueldo, contrasenha, prestamos){
     this.id = id;
     this.nombre = nombre;
     this.edad = edad;
     this.dni = dni;
     this.sueldo = sueldo;
     this.contrasenha = contrasenha;
+    this.prestamos = prestamos;
     }
 }
 
@@ -58,7 +47,7 @@ function crearCliente(){
     corroborarVacio(nDocumento);
     let salario = parseInt(prompt("Introduzca su sueldo mensual"))
     corroborarVacio(salario);
-    usuario = new Cliente(clientes.length, usuario, edad, nDocumento, salario, contrasenha);
+    usuario = new Cliente(clientes.length, usuario, edad, nDocumento, salario, contrasenha, 0);
     alert("Usuario creado correctamente");
     clientes.push(usuario)
     } else {
@@ -66,13 +55,38 @@ function crearCliente(){
     }
 }
 
+//funcion de iniciar sesion
 function iniciarSesion(clientes){
     let usuarioSesion = prompt("Introduzca su usuario");
-    const aprobado = () => {
-        clientes.some
+    const usuarioEncontrado = clientes.find((cliente) => cliente.nombre.toLowerCase()==usuarioSesion.toLowerCase())
+    if(usuarioEncontrado==undefined){
+        alert("No esta registrado en nuestra base de datos.\nGracias por su Visita")
+    } else {
+        alert("Usuario Correcto");
+        corroborarContraSesion(usuarioEncontrado);
+        menuOpciones();
     }
 }
 
+//corroborar contraseña
+function corroborarContraSesion(usuarioEncontrado){
+    let limiteErrores = 3;
+let intentosContrasenha;
+let contrasenhaEnter;
+let contrasenhaSesion = prompt("Introduzca su Contraseña")
+const contrasenhaOk = (contrasenhaSesion, usuarioEncontrado) => {if(contrasenhaSesion===usuarioEncontrado.contrasenha){
+    alert("Contraseña Correcta")
+    intentosContrasenha=3;
+} else {
+    if(contrasenha!=contrasenhaEnter){
+        alert("contraseña incorrecta");
+        if(intentosContrasenha==2){
+            alert("usuario Bloqueado")
+        }
+    }
+}
+}
+}
 function inicioPrograma(){
     let eleccion = parseInt(prompt("¿Que desea Hacer? \n 1. Crear Cliente \n 2. Iniciar Sesion \n 3. Salir" ))
     do{   
@@ -82,6 +96,7 @@ function inicioPrograma(){
                 eleccion = parseInt(prompt("¿Que desea Hacer? \n 1. Crear Cliente \n 2. Iniciar Sesion \n 3. Salir" ))                }
             if(eleccion==2){
                 iniciarSesion(clientes);
+                eleccion = parseInt(prompt("¿Que desea Hacer? \n 1. Crear Cliente \n 2. Iniciar Sesion \n 3. Salir" ))
             }
             while(eleccion==3){
                 alert("Gracias por tu Visita")
@@ -97,44 +112,7 @@ function inicioPrograma(){
 
 inicioPrograma();
 console.log(clientes);
-//corroborar usuario
-function corroborarUsuario(usuario){
-    for(let intentosUsuario=0; intentosUsuario<limiteErrores; intentosUsuario++){
-        usuarioEnter = prompt("Introduzca su nombre de usuario");
-        compararUsuario(usuario, intentosUsuario);
-        if(usuario!=usuarioEnter){
-            alert("Usuario Incorrecto");
-            if(intentosUsuario==2){
-                alert("Usuario Bloqueado");
-            }
-        };   
-    };
-}
-// function compararUsuario(usuario, intentosUsuario){
-//     if(usuario==usuarioEnter){
-//         alert("Usuario Correcto")
-//         intentosUsuario=3;
-//     }
-// }
 
-// //corroborar contraseña
-// function corroborarContrasenha(){
-//     if(usuario==usuarioEnter){
-//         for (intentosContrasenha=0; intentosContrasenha<limiteErrores; intentosContrasenha++){
-//             contrasenhaEnter = prompt("Introduzca su contraseña");
-//             if(contrasenha==contrasenhaEnter){
-//                 alert("Contraseña Correcta")
-//                 intentosContrasenha=3;
-//             }
-//             if(contrasenha!=contrasenhaEnter){
-//                 alert("contraseña incorrecta");
-//                 if(intentosContrasenha==2){
-//                     alert("usuario Bloqueado")
-//                 }
-//             }
-//         }
-//     }
-// }
 
 // //comparacion final
 // function controlFinal(){

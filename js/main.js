@@ -62,35 +62,39 @@ function crearCliente(){
 //funcion de iniciar sesion
 function iniciarSesion(clientes){
     let usuarioSesion = prompt("Introduzca su usuario");
-    const usuarioEncontrado = clientes.find((cliente) => cliente.nombre.toLowerCase()==usuarioSesion.toLowerCase())
+    let usuarioEncontrado = clientes.find((cliente) => cliente.nombre.toLowerCase()==usuarioSesion.toLowerCase())
     if(usuarioEncontrado==undefined){
         alert("No esta registrado en nuestra base de datos.\nGracias por su Visita")
     } else {
         alert("Usuario Correcto");
-        corroborarContraSesion(usuarioEncontrado);
-        menuOpciones();
-    }
-}
-
-//corroborar contraseña
-function corroborarContraSesion(usuarioEncontrado){
-    let limiteErrores = 3;
-let intentosContrasenha;
-let contrasenhaEnter;
-let contrasenhaSesion = prompt("Introduzca su Contraseña")
-const contrasenhaOk = (contrasenhaSesion, usuarioEncontrado) => {if(contrasenhaSesion===usuarioEncontrado.contrasenha){
-    alert("Contraseña Correcta")
-    intentosContrasenha=3;
-} else {
-    if(contrasenha!=contrasenhaEnter){
-        alert("contraseña incorrecta");
-        if(intentosContrasenha==2){
-            alert("usuario Bloqueado")
+        corroborarContraSesion(usuarioEncontrado);//corrabora la contraseña en el inicio de sesion
+        function corroborarContraSesion(){
+            let intentosFallidos =0;
+            let contrasenhaSesion = prompt("Introduzca su Contraseña")
+            const contrasenhaOk = (contrasenhaSesion===usuarioEncontrado.contrasenha)
+            if(contrasenhaOk){
+                alert("Contraseña Correcta")
+                menuOpciones()
+            } else {
+                while(contrasenhaSesion != usuarioEncontrado.contrasenha && intentosFallidos<2){
+                    alert("Contraseña no coinciden");
+                    contrasenhaSesion = prompt("Introduzca su Contraseña");
+                    intentosFallidos++;
+                }
+            }
         }
     }
 }
+
+function menuOpciones(){
+    let menu = prompt("1. Prestamo\n2. Inversiones(Todavia no esta programado)")
+    if(menu==1){
+        pedidoPrestamo();
+    }
 }
-}
+
+
+
 function inicioPrograma(){
     let eleccion = parseInt(prompt("¿Que desea Hacer? \n 1. Crear Cliente \n 2. Iniciar Sesion \n 3. Salir" ))
     do{   
@@ -114,107 +118,81 @@ function inicioPrograma(){
     }while(eleccion == 0 || eleccion >= 4)
 }
 
+function pedidoPrestamo(){
+    let cantidadPrestamo = parseFloat(prompt("¿Cuanto es el dinero que usted quiere recibir?"));
+    controlCero(cantidadPrestamo);
+    alert("¿En cuantas cuota usted quiere devolver el prestamo?");
+    let cuotas = parseInt(prompt("Las opciones son 3, 6, 12, 24 y 48 cuotas"));
+    controlCuotas(cuotas);
+    let cantidadIntereses = eleccionInteres(cuotas);
+    let intereses = calculoItereses(cantidadPrestamo, cantidadIntereses);
+    let valorFinalPrestamo = sumaDineroFinal(cantidadPrestamo, intereses);
+    let valorCuota = calculoCuota(valorFinalPrestamo, cuotas);
+    alert("Tu Prestamo a sido Calculado");
+    muestra(cantidadPrestamo, intereses, cuotas, valorCuota)
+}
+
+function sumaDineroFinal(cantidadPrestamo, intereses){
+    return cantidadPrestamo + intereses;
+}
+
+function calculoCuota(valorFinalPrestamo, cuotas){
+    return valorFinalPrestamo/cuotas;
+}
+
+function eleccionInteres(cuotas){
+    switch(cuotas){
+        case 3:
+            return 0.21;
+            break;
+        case 6:
+            return 0.42;
+            break;
+        case 12:
+            return 0.84;
+            break;
+        case 24:
+            return 1.68;
+            break;
+        case 48:
+            return 3.36;
+            break;
+    }
+}
+
+function controlCuotas(cuotas){
+    while(cuotas != 3 && cuotas != 6 && cuotas != 12 && cuotas != 24 && cuotas != 48){
+        alert("Error en eleccion de cuotas");
+        cuotas = parseInt(prompt("Las opciones son 3, 6, 12, 24 y 48 cuotas"));
+    }
+}
+
+function calculoItereses(cantidadPrestamo, cantidadIntereses){
+    return cantidadPrestamo * cantidadIntereses;
+}
+
+function controlCero(cantidadPrestamo){
+    while(cantidadPrestamo <= 0){
+        alert("El monto tiene que ser mayor a cero");
+        cantidadPrestamo = parseFloat(prompt("¿Cuanto es el dinero que usted quiere recibir?"));
+    }
+}
+
+function muestra(cantidadPrestamo, intereses, cuotas, valorCuota){
+    alert(`Tu Prestamo por $ ${cantidadPrestamo} tiene un interes de $ ${intereses} en la cantidad de ${cuotas} cuotas cuotas que elegiste.`); 
+    alert(`Tus Cuotas seran de $ ${valorCuota.toFixed(2)}`);
+    aceptarTrato();
+}
+
+function aceptarTrato(){
+    let validacion = prompt("¿Acepta el prestamo? Si/No");
+    if(validacion.toLowerCase()=="si"){
+        alert("su prestamo entrara en revision, espere una respuesta.");
+        alert("Gracias")
+    } else {
+        alert("a rechazado el prestamo. Saludos")
+    }
+}
+
 inicioPrograma();
 console.log(clientes);
-
-
-// //comparacion final
-// function controlFinal(){
-//     if(usuario==usuarioEnter && contrasenha==contrasenhaEnter){
-//         alert("Inicio de Sesión Satisfactorio")
-//         alert("Bienvenido " + usuario)
-//     } else {
-//         alert("Usuario no encontrado")
-//     }
-// }
-
-
-
-
-// //calculo de prestamos
-// //variables
-// let cuotas = 0;
-// let cantidadPrestamo = 0;
-// let valorFinalPrestamo = 0;
-// let intereses = 0;
-// let cantidadIntereses = 0;
-// let valorCuota = 0;
-// //funcionesgh´{}
-// function sumaDineroFinal(){
-//     valorFinalPrestamo = cantidadPrestamo + intereses;
-// }
-
-// function calculoCuota(){
-//     valorCuota = valorFinalPrestamo/cuotas;
-// }
-
-// function eleccionInteres(){
-//     switch(cuotas){
-//         case 3:
-//             cantidadIntereses = 0.21;
-//             break;
-//         case 6:
-//             cantidadIntereses = 0.42;
-//             break;
-//         case 12:
-//             cantidadIntereses = 0.84;
-//             break;
-//         case 24:
-//             cantidadIntereses = 1.68;
-//             break;
-//         case 48:
-//             cantidadIntereses = 3.36;
-//             break;
-//     }
-// }
-
-// function controlCuotas(){
-//     while(cuotas != 3 && cuotas != 6 && cuotas != 12 && cuotas != 24 && cuotas != 48){
-//         alert("Error en eleccion de cuotas");
-//         cuotas = parseInt(prompt("Las opciones son 3, 6, 12, 24 y 48 cuotas"));
-//     }
-// }
-
-// function calculoItereses(){
-//     intereses = cantidadPrestamo * cantidadIntereses;
-// }
-
-// function controlCero(){
-//     while(cantidadPrestamo <= 0){
-//         alert("El monto tiene que ser mayor a cero");
-//         cantidadPrestamo = parseFloat(prompt("¿Cuanto es el dinero que usted quiere recibir?"));
-//     }
-// }
-
-// function pedidoPrestamo(){
-//     cantidadPrestamo = parseFloat(prompt("¿Cuanto es el dinero que usted quiere recibir?"));
-//     controlCero();
-//     alert("¿En cuantas cuota usted quiere devolver el prestamo?");
-//     cuotas = parseInt(prompt("Las opciones son 3, 6, 12, 24 y 48 cuotas"));
-//     controlCuotas();
-//     eleccionInteres();
-//     calculoItereses();
-//     sumaDineroFinal();
-//     calculoCuota();
-//     alert("Tu Prestamo a sido Calculado");
-// }
-
-// function aceptarTrato(){
-//     let validacion = prompt("¿Acepta el prestamo? Si/No");
-//     if(validacion.toLowerCase()=="si"){
-//         alert("su prestamo entrara en revision, espere una respuesta.");
-//         alert("Gracias")
-//     } else {
-//         alert("a rechazado el prestamo. Saludos")
-//     }
-// }
-// function muestra(){
-//     alert("Tu Prestamo por $" + cantidadPrestamo + " tiene un interes de $" + intereses + " en la cantidad de " + cuotas + " cuotas que elegiste."); 
-//     alert("Tus Cuotas seran de $" + valorCuota.toFixed(2));
-//     aceptarTrato();
-// }
-
-// //ejecucion
-
-// pedidoPrestamo();
-// muestra();

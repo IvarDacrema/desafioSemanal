@@ -21,23 +21,6 @@ function corroborarVacio(items){
     }
 }
 
-//función crear contraseña
-function crearContrasenha(contrasenha){
-    this.contrasenha = contrasenha;
-    let errores = 0;
-    corroborarVacio(contrasenha);
-    let corroborarContra = prompt("Repita la contraseña");
-    while(contrasenha!=corroborarContra && errores<2 && corroborarContra==""){
-        alert("Las contraseñas no coinciden");
-        corroborarContra = prompt("Repita la contraseña");
-        errores++;
-    }
-    if(errores>=2){
-        alert("No puedes crear tu usuario --> contreñas no coinciden")
-        return contrasenha = "bloqueado34785";//esto evita que el usuario se cree aunque no hagan bien la contraseña
-    }         
-}
-
 //creamos el cliente
 function crearCliente(){
     let usuario = prompt("Introduzca un Usuario");
@@ -57,6 +40,23 @@ function crearCliente(){
     } else {
         alert("Cliente no Creado")
     }
+}
+
+//función crear contraseña
+function crearContrasenha(contrasenha){
+    this.contrasenha = contrasenha;
+    let errores = 0;
+    corroborarVacio(contrasenha);
+    let corroborarContra = prompt("Repita la contraseña");
+    while(contrasenha!=corroborarContra && errores<2 && corroborarContra==""){
+        alert("Las contraseñas no coinciden");
+        corroborarContra = prompt("Repita la contraseña");
+        errores++;
+    }
+    if(errores>=2){
+        alert("No puedes crear tu usuario --> contreñas no coinciden")
+        return contrasenha = "bloqueado34785";//esto evita que el usuario se cree aunque no hagan bien la contraseña
+    }         
 }
 
 //funcion de iniciar sesion
@@ -93,31 +93,6 @@ function menuOpciones(){
     }
 }
 
-
-
-function inicioPrograma(){
-    let eleccion = parseInt(prompt("¿Que desea Hacer? \n 1. Crear Cliente \n 2. Iniciar Sesion \n 3. Salir" ))
-    do{   
-        while(eleccion < 4 && eleccion > 0){
-            if(eleccion==1){
-                crearCliente();
-                eleccion = parseInt(prompt("¿Que desea Hacer? \n 1. Crear Cliente \n 2. Iniciar Sesion \n 3. Salir" ))                }
-            if(eleccion==2){
-                iniciarSesion(clientes);
-                eleccion = parseInt(prompt("¿Que desea Hacer? \n 1. Crear Cliente \n 2. Iniciar Sesion \n 3. Salir" ))
-            }
-            while(eleccion==3){
-                alert("Gracias por tu Visita")
-                eleccion = "salir";    
-            }
-        }
-        if(eleccion == 0 || eleccion >= 4){
-            alert("La Opción no es Correcta");
-            eleccion = parseInt(prompt("¿Que desea Hacer? \n 1. Crear Cliente \n 2. Iniciar Sesion \n 3. Salir" ))
-        }
-    }while(eleccion == 0 || eleccion >= 4)
-}
-
 function pedidoPrestamo(){
     let cantidadPrestamo = parseFloat(prompt("¿Cuanto es el dinero que usted quiere recibir?"));
     controlCero(cantidadPrestamo);
@@ -132,12 +107,20 @@ function pedidoPrestamo(){
     muestra(cantidadPrestamo, intereses, cuotas, valorCuota)
 }
 
-function sumaDineroFinal(cantidadPrestamo, intereses){
-    return cantidadPrestamo + intereses;
+//funcion que verifica que el pedido de prestamo es mayor a cero
+function controlCero(cantidadPrestamo){
+    while(cantidadPrestamo <= 0){
+        alert("El monto tiene que ser mayor a cero");
+        cantidadPrestamo = parseFloat(prompt("¿Cuanto es el dinero que usted quiere recibir?"));
+    }
 }
 
-function calculoCuota(valorFinalPrestamo, cuotas){
-    return valorFinalPrestamo/cuotas;
+//pregunta es cuantas cuotas quiere devolver el prestamo
+function controlCuotas(cuotas){
+    while(cuotas != 3 && cuotas != 6 && cuotas != 12 && cuotas != 24 && cuotas != 48){
+        alert("Error en eleccion de cuotas");
+        cuotas = parseInt(prompt("Las opciones son 3, 6, 12, 24 y 48 cuotas"));
+    }
 }
 
 function eleccionInteres(cuotas){
@@ -160,28 +143,16 @@ function eleccionInteres(cuotas){
     }
 }
 
-function controlCuotas(cuotas){
-    while(cuotas != 3 && cuotas != 6 && cuotas != 12 && cuotas != 24 && cuotas != 48){
-        alert("Error en eleccion de cuotas");
-        cuotas = parseInt(prompt("Las opciones son 3, 6, 12, 24 y 48 cuotas"));
-    }
-}
-
 function calculoItereses(cantidadPrestamo, cantidadIntereses){
     return cantidadPrestamo * cantidadIntereses;
 }
 
-function controlCero(cantidadPrestamo){
-    while(cantidadPrestamo <= 0){
-        alert("El monto tiene que ser mayor a cero");
-        cantidadPrestamo = parseFloat(prompt("¿Cuanto es el dinero que usted quiere recibir?"));
-    }
+function sumaDineroFinal(cantidadPrestamo, intereses){
+    return cantidadPrestamo + intereses;
 }
 
-function muestra(cantidadPrestamo, intereses, cuotas, valorCuota){
-    alert(`Tu Prestamo por $ ${cantidadPrestamo} tiene un interes de $ ${intereses} en la cantidad de ${cuotas} cuotas cuotas que elegiste.`); 
-    alert(`Tus Cuotas seran de $ ${valorCuota.toFixed(2)}`);
-    aceptarTrato();
+function calculoCuota(valorFinalPrestamo, cuotas){
+    return valorFinalPrestamo/cuotas;
 }
 
 function aceptarTrato(){
@@ -192,6 +163,36 @@ function aceptarTrato(){
     } else {
         alert("a rechazado el prestamo. Saludos")
     }
+}
+
+function muestra(cantidadPrestamo, intereses, cuotas, valorCuota){
+    alert(`Tu Prestamo por $ ${cantidadPrestamo} tiene un interes de $ ${intereses} en la cantidad de ${cuotas} cuotas cuotas que elegiste.`); 
+    alert(`Tus Cuotas seran de $ ${valorCuota.toFixed(2)}`);
+    aceptarTrato();
+}
+
+//funcion de iniciar sesion
+function inicioPrograma(){
+    let eleccion = parseInt(prompt("¿Que desea Hacer? \n 1. Crear Cliente \n 2. Iniciar Sesion \n 3. Salir" ))
+    do{   
+        while(eleccion < 4 && eleccion > 0){
+            if(eleccion==1){
+                crearCliente();
+                eleccion = parseInt(prompt("¿Que desea Hacer? \n 1. Crear Cliente \n 2. Iniciar Sesion \n 3. Salir" ))                }
+            if(eleccion==2){
+                iniciarSesion(clientes);
+                eleccion = parseInt(prompt("¿Que desea Hacer? \n 1. Crear Cliente \n 2. Iniciar Sesion \n 3. Salir" ))
+            }
+            while(eleccion==3){
+                alert("Gracias por tu Visita")
+                eleccion = "salir";    
+            }
+        }
+        if(eleccion == 0 || eleccion >= 4){
+            alert("La Opción no es Correcta");
+            eleccion = parseInt(prompt("¿Que desea Hacer? \n 1. Crear Cliente \n 2. Iniciar Sesion \n 3. Salir" ))
+        }
+    }while(eleccion == 0 || eleccion >= 4)
 }
 
 inicioPrograma();

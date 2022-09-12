@@ -171,29 +171,38 @@ function muestra(cantidadPrestamo, intereses, cuotas, valorCuota){
     aceptarTrato();
 }
 
+//muestra lista de los clientes
+function muestraClientes(clientes){
+    clientes.forEach((cliente) => {console.log(`Nombre: ${cliente.nombre} y ID: ${cliente.id}`)});
+}
+
 //funcion de iniciar sesion
 function inicioPrograma(){
-    let eleccion = parseInt(prompt("¿Que desea Hacer? \n 1. Crear Cliente \n 2. Iniciar Sesion \n 3. Salir" ))
+    let eleccion = parseInt(prompt("¿Que desea Hacer? \n 1. Crear Cliente \n 2. Iniciar Sesion \n 3. Lista de Clientes \n 4. Salir"))
     do{   
-        while(eleccion < 4 && eleccion > 0){
+        while(eleccion < 5 && eleccion > 0){
             if(eleccion==1){
                 crearCliente();
-                eleccion = parseInt(prompt("¿Que desea Hacer? \n 1. Crear Cliente \n 2. Iniciar Sesion \n 3. Salir" ))                }
+                eleccion = parseInt(prompt("¿Que desea Hacer? \n 1. Crear Cliente \n 2. Iniciar Sesion \n 3. Lista de Clientes \n 4. Salir"))
+            }
             if(eleccion==2){
                 iniciarSesion(clientes);
-                eleccion = parseInt(prompt("¿Que desea Hacer? \n 1. Crear Cliente \n 2. Iniciar Sesion \n 3. Salir" ))
+                eleccion = parseInt(prompt("¿Que desea Hacer? \n 1. Crear Cliente \n 2. Iniciar Sesion \n 3. Lista de Clientes \n 4. Salir"))
             }
-            while(eleccion==3){
+            if(eleccion==3){
+                muestraClientes(clientes);
+                eleccion = parseInt(prompt("¿Que desea Hacer? \n 1. Crear Cliente \n 2. Iniciar Sesion \n 3. Lista de Clientes \n 4. Salir"))
+            }
+            while(eleccion==4){
                 alert("Gracias por tu Visita")
                 eleccion = "salir";    
             }
         }
-        if(eleccion == 0 || eleccion >= 4){
+        if(eleccion == 0 || eleccion >= 5){
             alert("La Opción no es Correcta");
             eleccion = parseInt(prompt("¿Que desea Hacer? \n 1. Crear Cliente \n 2. Iniciar Sesion \n 3. Salir" ))
         }
-    }while(eleccion == 0 || eleccion >= 4)
+    }while(eleccion == 0 || eleccion >= 5)
 }
 
 inicioPrograma();
-console.log(clientes);

@@ -86,11 +86,10 @@ function muestraClientes(clientes){
 
 //función crear contraseña
 function crearContrasenha(contrasenha){
-    this.contrasenha = contrasenha;
     let errores = 0;
     corroborarVacio(contrasenha);
     let corroborarContra = prompt("Repita la contraseña");
-    while(contrasenha!=corroborarContra && errores<2 && corroborarContra==""){
+    while(contrasenha!=corroborarContra && errores<2){
         alert("Las contraseñas no coinciden");
         corroborarContra = prompt("Repita la contraseña");
         errores++;

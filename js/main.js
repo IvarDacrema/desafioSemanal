@@ -14,6 +14,16 @@ class Cliente{
     }
 }
 
+//fucnion de corroborar numeros
+function corroborarNumeros(input){
+    while(isNaN(input)){
+        alert("No es un valor valido.")
+        input = parseInt(prompt("Igrese nuevamente el Dato"))
+        console.log(input)
+    }
+    return input;
+}
+
 //funcion de corroborar errores
 function corroborarVacio(items){
     while(items==""){
@@ -110,6 +120,7 @@ function muestra(cantidadPrestamo, intereses, cuotas, valorCuota){
 function pedidoPrestamo(){
     let cantidadPrestamo = parseFloat(prompt("¿Cuanto es el dinero que usted quiere recibir?"));
     controlCero(cantidadPrestamo);
+    cantidadPrestamo = corroborarNumeros(cantidadPrestamo)
     alert("¿En cuantas cuota usted quiere devolver el prestamo?");
     let cuotas = parseInt(prompt("Las opciones son 3, 6, 12, 24 y 48 cuotas"));
     controlCuotas(cuotas);
@@ -137,10 +148,13 @@ function crearCliente(){
     if(bloqueo != "bloqueado34785"){//para eviar que el programa siga creando el usuario sin la contraseña no se realiza bien.
     let edad = parseInt(prompt("Introduzca su Edad"));
     corroborarVacio(edad);
+    edad = corroborarNumeros(edad);
     let nDocumento = parseInt(prompt("Introduzca su Numero de Documento"));
     corroborarVacio(nDocumento);
+    nDocumento = corroborarNumeros(nDocumento);
     let salario = parseInt(prompt("Introduzca su sueldo mensual"))
     corroborarVacio(salario);
+    salario = corroborarNumeros(salario);
     usuario = new Cliente(clientes.length, usuario, edad, nDocumento, salario, contrasenha, 0);
     alert("Usuario creado correctamente");
     clientes.push(usuario)

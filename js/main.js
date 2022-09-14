@@ -87,8 +87,6 @@ function muestraClientes(clientes){
 //función crear contraseña
 function crearContrasenha(contrasenha){
     let errores = 0;
-    corroborarVacio(contrasenha);
-    let corroborarContra = prompt("Repita la contraseña");
     while(contrasenha!=corroborarContra && errores<2){
         alert("Las contraseñas no coinciden");
         corroborarContra = prompt("Repita la contraseña");
@@ -143,6 +141,7 @@ function crearCliente(){
     let usuario = prompt("Introduzca un Usuario");
     corroborarVacio(usuario);
     let contrasenha = prompt("Introduzca su Contraseña");
+    corroborarVacio(contrasenha);
     let bloqueo = crearContrasenha(contrasenha);
     if(bloqueo != "bloqueado34785"){//para eviar que el programa siga creando el usuario sin la contraseña no se realiza bien.
     let edad = parseInt(prompt("Introduzca su Edad"));

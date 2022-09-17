@@ -1,0 +1,17 @@
+.contenedorBotones{
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.boton{
+    height: 40px;
+    width: 120px;
+    margin: 0 30px;
+    background-color: rgb(102, 102, 198);
+    font-weight: bolder;
+    color: white;
+    border: rgb(5, 5, 94);
+    border-radius: 5px;
+}

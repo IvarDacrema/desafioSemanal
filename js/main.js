@@ -26,7 +26,7 @@ function corroborarNumeros(input){
 
 //funcion de corroborar errores
 function corroborarVacio(items){
-    while(items==""){
+    while(items===""){
         items = prompt("El formulario no puede estar vacio.\n Introduzca nuevamente la información")
     }
 }

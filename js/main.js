@@ -18,16 +18,6 @@ class Cliente{
     }
 }
 
-let ingresoUsuario = document.getElementById(`ingresoUsuario`);
-let ingresoContrasenha = document.getElementById(`ingresoContrasenha`);
-let botonInicio = document.getElementById(`botonInicio`);
-
-botonInicio.addEventListener("click", ()=>{
-    alert(botonInicio.value)
-    alert(ingresoUsuario.value)
-    alert(ingresoContrasenha.value)
-})
-
 let clientes = []
 if(localStorage.getItem(`clientes`)){
     clientes = JSON.parse(localStorage.getItem(`clientes`))
@@ -49,4 +39,23 @@ function crearUsuario(clientes){
     clientes.push(nuevoCliente)
     localStorage.setItem(`clientes`, JSON.stringify(clientes))
     console.log(clientes)
+}
+
+
+let botonInicio = document.getElementById(`botonInicio`);
+
+botonInicio.addEventListener("click", ()=>{
+    iniciarSesion(clientes)
+})
+
+function iniciarSesion(clientes){
+    let ingresoUsuario = document.getElementById(`ingresoUsuario`);
+    let ingresoContrasenha = document.getElementById(`ingresoContrasenha`);
+    let usuarioEncontrado = clientes.find((cliente) => cliente.usuario.toLowerCase()==ingresoUsuario.value.toLowerCase())
+    let contrasenhaEncontrada = clientes.find((cliente)=> cliente.contrasenha===ingresoContrasenha.value);
+    if(usuarioEncontrado && contrasenhaEncontrada){
+        alert("inicio de sesion")
+    }else{
+        alert("error en algun dato")
+    }   
 }

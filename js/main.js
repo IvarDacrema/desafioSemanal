@@ -53,11 +53,19 @@ function crearCliente(clientes){
     if(corroborarVacio(usuario.value) || corroborarVacio(contrasenha.value)|| corroborarVacio(emailInput.value)|| corroborarVacio(telefonoInput.value)){
         alert("datos vacios")
     }else if(corroborarNumeros(parseInt(telefonoInput.value))){
-        alert("solo caracteres numeros en telefono")
+        let errorTelefono = document.getElementById("avisoTelefono")
+        errorTelefono.innerText = ""
+        let aviso = document.createElement("h5")
+        aviso.innerText = "telefono no puede contener letras o caracteres especiales";
+        errorTelefono.append(aviso)
     }else{
         let nuevoCliente = new Cliente(clientes.length, usuarioInput.value, contrasenhaInput.value, emailInput.value, telefonoInput.value);
         clientes.push(nuevoCliente)
         localStorage.setItem(`clientes`, JSON.stringify(clientes))
+        usuario.value = ""
+        contrasenha.value = ""
+        emailInput.value = ""
+        telefonoInput.value = ""
     }
 }
 
@@ -75,6 +83,8 @@ function iniciarSesion(clientes){
     let contrasenhaEncontrada = clientes.find((cliente)=> cliente.contrasenha===ingresoContrasenha.value);
     if(usuarioEncontrado && contrasenhaEncontrada){
         alert("inicio de sesion")
+        ingresoUsuario.value = ""
+        ingresoContrasenha.value = ""
     }else{
         alert("inicio de sesion fallido")
     }   

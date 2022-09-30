@@ -120,3 +120,8 @@ body {
 .contenedor-form .formulario:nth-child(2) {
     display: block;
 }
+
+#avisoTelefono{
+    color: #FF851B;
+    font-size: 1.2em;
+}

@@ -27,20 +27,39 @@ if(localStorage.getItem(`clientes`)){
 
 let botonRegistro = document.getElementById("botonRegistro")
 botonRegistro.addEventListener("click", ()=>{
-    crearUsuario(clientes)
+    crearCliente(clientes)
 })
 
-function crearUsuario(clientes){
-    let usuarioInput = document.getElementById("usuarioInput")
-    let contrasenhaInput = document.getElementById("contrasenhaInput")
+function corroborarNumeros(input){
+    if(isNaN(input)){
+        return true
+    } else {
+        return false
+    }
+}
+function corroborarVacio(items){
+    if(items===""){
+        return true
+    } else {
+        return false
+    }
+    
+}
+function crearCliente(clientes){
+    let usuario = document.getElementById("usuarioInput");
+    let contrasenha = document.getElementById("contrasenhaInput");
     let emailInput = document.getElementById("emailInput")
     let telefonoInput = document.getElementById("telefonoInput")
-    let nuevoCliente = new Cliente(clientes.length, usuarioInput.value, contrasenhaInput.value, emailInput.value, telefonoInput.value);
-    clientes.push(nuevoCliente)
-    localStorage.setItem(`clientes`, JSON.stringify(clientes))
-    console.log(clientes)
+    if(corroborarVacio(usuario.value) || corroborarVacio(contrasenha.value)|| corroborarVacio(emailInput.value)|| corroborarVacio(telefonoInput.value)){
+        alert("datos vacios")
+    }else if(corroborarNumeros(parseInt(telefonoInput.value))){
+        alert("solo caracteres numeros en telefono")
+    }else{
+        let nuevoCliente = new Cliente(clientes.length, usuarioInput.value, contrasenhaInput.value, emailInput.value, telefonoInput.value);
+        clientes.push(nuevoCliente)
+        localStorage.setItem(`clientes`, JSON.stringify(clientes))
+    }
 }
-
 
 let botonInicio = document.getElementById(`botonInicio`);
 
@@ -49,6 +68,7 @@ botonInicio.addEventListener("click", ()=>{
 })
 
 function iniciarSesion(clientes){
+    let errores
     let ingresoUsuario = document.getElementById(`ingresoUsuario`);
     let ingresoContrasenha = document.getElementById(`ingresoContrasenha`);
     let usuarioEncontrado = clientes.find((cliente) => cliente.usuario.toLowerCase()==ingresoUsuario.value.toLowerCase())
@@ -56,6 +76,6 @@ function iniciarSesion(clientes){
     if(usuarioEncontrado && contrasenhaEncontrada){
         alert("inicio de sesion")
     }else{
-        alert("error en algun dato")
+        alert("inicio de sesion fallido")
     }   
 }

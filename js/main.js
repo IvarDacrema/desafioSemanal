@@ -19,42 +19,26 @@ class Cliente{
 }
 
 let clientes = []
-if(localStorage.getItem(`clientes`)){
-    clientes = JSON.parse(localStorage.getItem(`clientes`))
-} else {
-    localStorage.setItem(`clientes`, JSON.stringify(clientes))
-}
+
+clientes = localStorage.getItem(`clientes`) ? JSON.parse(localStorage.getItem(`clientes`)) : localStorage.setItem(`clientes`, JSON.stringify(clientes))
 
 let botonRegistro = document.getElementById("botonRegistro")
 botonRegistro.addEventListener("click", ()=>{
     crearCliente(clientes)
 })
 
-function corroborarNumeros(input){
-    if(isNaN(input)){
-        return true
-    } else {
-        return false
-    }
-}
-function corroborarVacio(items){
-    if(items===""){
-        return true
-    } else {
-        return false
-    }
-    
-}
 function crearCliente(clientes){
     let usuario = document.getElementById("usuarioInput");
     let contrasenha = document.getElementById("contrasenhaInput");
     let emailInput = document.getElementById("emailInput")
     let telefonoInput = document.getElementById("telefonoInput")
-    if(corroborarVacio(usuario.value) || corroborarVacio(contrasenha.value)|| corroborarVacio(emailInput.value)|| corroborarVacio(telefonoInput.value)){
+    //control de que las casillas no esten vacias
+    if(usuario.value==="" ? true : false || contrasenha.value==="" ? true : false || emailInput.value==="" ? true : false || telefonoInput.value==="" ? true : false){
         alert("datos vacios")
-    }else if(corroborarNumeros(parseInt(telefonoInput.value))){
+    //corrobora que el numero de telefono sean numeros
+    }else if(isNaN(parseInt(telefonoInput.value)) ? true : false){
         let errorTelefono = document.getElementById("avisoTelefono")
-        errorTelefono.innerText = ""
+        errorTelefono.innerText.remove
         let aviso = document.createElement("h5")
         aviso.innerText = "telefono no puede contener letras o caracteres especiales";
         errorTelefono.append(aviso)

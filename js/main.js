@@ -18,6 +18,16 @@ class Cliente{
     }
 }
 
+function mostrarPop(mensaje){
+    Swal.fire({
+        position: 'top-center',
+        icon: 'success',
+        title: mensaje,
+        showConfirmButton: false,
+        timer: 3000
+      })
+}
+
 let clientes = []
 
 clientes = localStorage.getItem(`clientes`) ? JSON.parse(localStorage.getItem(`clientes`)) : localStorage.setItem(`clientes`, JSON.stringify(clientes))
@@ -50,6 +60,7 @@ function crearCliente(clientes){
         contrasenha.value = ""
         emailInput.value = ""
         telefonoInput.value = ""
+        mostrarPop('USUARIO CREADO CORRECTAMENTE');
     }
 }
 
@@ -66,10 +77,14 @@ function iniciarSesion(clientes){
     let usuarioEncontrado = clientes.find((cliente) => cliente.usuario.toLowerCase()==ingresoUsuario.value.toLowerCase())
     let contrasenhaEncontrada = clientes.find((cliente)=> cliente.contrasenha===ingresoContrasenha.value);
     if(usuarioEncontrado && contrasenhaEncontrada){
-        alert("inicio de sesion")
+        mostrarPop(`INICIO DE SESION SATISFACTORIO`)
         ingresoUsuario.value = ""
         ingresoContrasenha.value = ""
     }else{
-        alert("inicio de sesion fallido")
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'NO FUE POSIBLE INICIAR SESION'
+          })
     }   
 }

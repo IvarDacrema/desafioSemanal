@@ -1,0 +1,23 @@
+[
+    {
+        "id": 0,
+        "usuario": "ivar",
+        "contrasenha": "123456",
+        "email": "ivar.m.da@yahoo.com",
+        "telefono": 2634555555
+    },
+    {
+        "id": 1,
+        "usuario": "ara",
+        "contrasenha": "789456",
+        "email": "ara.f.da@yahoo.com",
+        "telefono": 2634777555
+    },
+    {
+        "id": 2,
+        "usuario": "maxi",
+        "contrasenha": "asd456",
+        "email": "maxi.m.da@yahoo.com",
+        "telefono": 2634665555
+    }
+]

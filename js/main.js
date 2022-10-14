@@ -25,10 +25,21 @@ function mostrarPop(mensaje){
         title: mensaje,
         showConfirmButton: false,
         timer: 3000
-      })
+    })
 }
 
 let clientes = []
+
+const cargarClientes = async () => {
+    const response = await fetch(`../clientes.json`)
+    const data = await response.json()
+    for (let cliente of data){
+        let clienteNuevo = new Cliente(cliente.id, cliente.usuario, cliente.contrasenha, cliente.email, cliente.telefono)
+        clientes.push(clienteNuevo)
+    }
+}
+
+cargarClientes();
 
 clientes = localStorage.getItem(`clientes`) ? JSON.parse(localStorage.getItem(`clientes`)) : localStorage.setItem(`clientes`, JSON.stringify(clientes))
 
@@ -85,6 +96,6 @@ function iniciarSesion(clientes){
             icon: 'error',
             title: 'Oops...',
             text: 'NO FUE POSIBLE INICIAR SESION'
-          })
+        })
     }   
 }
